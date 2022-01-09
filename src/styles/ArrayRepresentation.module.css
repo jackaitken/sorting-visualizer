@@ -1,0 +1,13 @@
+.arrayBarWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrayBar {
+  background: black;
+  width: 5px;
+  margin: 1px;
+  display: inline-block;
+}
+

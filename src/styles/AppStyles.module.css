@@ -1,0 +1,11 @@
+.buttonWrapper {
+  padding-bottom: 10%;
+  padding-top: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.algoButton {
+  margin: 1%;
+}
