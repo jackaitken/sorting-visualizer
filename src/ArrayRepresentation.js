@@ -6,7 +6,8 @@ function ArrayRepresentation(props) {
     <div
     className={styles.arrayBar}
     style={{height: `${num * 5}px`}}
-    key={idx}>
+    key={idx}
+    id={`arrayBar${idx}`}>
     </div>
   );
 
