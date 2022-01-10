@@ -13,30 +13,35 @@ function App() {
   // const [ algorithm, setAlgorithm ] = useState(SortingAlgorithms.algorithms['bubble']);
   const animationIsSet = useRef(false);
 
-
   function handleBubbleSortAnimation(sortAlgorithm) { 
     setAnimationArr(sortAlgorithm([...array]));
   }
 
   useEffect(() => {
-    if (animationIsSet.current) {
-      for (let i = 0; i < animationArr.length; i++) {
-        setTimeout(() => {
-          let [ indexOne, indexTwo ] = animationArr[i].startState;
-          let firstBarStyle = document.getElementById(`arrayBar${indexOne}`).style;
-          let secondBarStyle = document.getElementById(`arrayBar${indexTwo}`).style;
+    array.forEach((_, index) => {
+      document.getElementById(`arrayBar${index}`).style.background = 'black';
+    });
+  }, [array]);
 
+  useEffect(() => {
+    if (animationIsSet.current) {      
+      for (let i = 0; i < animationArr.length; i++) {
+        let [ indexOne, indexTwo ] = animationArr[i].startState;
+        let firstBarStyle = document.getElementById(`arrayBar${indexOne}`).style;
+        let secondBarStyle = document.getElementById(`arrayBar${indexTwo}`).style;
+
+        setTimeout(() => {  
           firstBarStyle.background = 'red';
           secondBarStyle.background = 'red';
+        }, i * 3);
 
+        setTimeout(() => {
           if (animationArr[i].swap) {
-            let tempHeight = firstBarStyle.height
-            firstBarStyle.height = secondBarStyle.height
-            secondBarStyle.height = tempHeight;
+            [ firstBarStyle.height, secondBarStyle.height ] = [ secondBarStyle.height, firstBarStyle.height ];
           }
-
           firstBarStyle.background = 'black';
-        }, i * 10);
+          secondBarStyle.background = 'black';
+        }, (i + 1) * 3);
       }
     } else {
       animationIsSet.current = true;
