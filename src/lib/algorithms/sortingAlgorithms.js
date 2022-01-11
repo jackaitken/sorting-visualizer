@@ -30,10 +30,6 @@ class SortingAlgorithms {
     return animationArr;
   }
 
-  static bubbleSortTwo(array) {
-
-  }
-
   static quicksort() {
     // STUB
   }
