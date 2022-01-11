@@ -14,7 +14,7 @@ function ChangeArraySizeSlider({ handleChange }) {
     name='sizeSlider' 
     type='range' 
     min='10'
-    max='90'
+    max='175'
     onChange={handleSpeedChange}></input>
     </div>
   )

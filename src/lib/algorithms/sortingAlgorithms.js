@@ -23,6 +23,11 @@ class SortingAlgorithms {
         } else {
           animationObj.swap = false;
         }
+        if (i === currentlyUnsorted - 1) {
+          animationObj.sorted = true;
+        } else {
+          animationObj.sorted = false;
+        }
         animationArr.push(animationObj);
       }
       currentlyUnsorted -= 1;
@@ -34,13 +39,13 @@ class SortingAlgorithms {
     // STUB
   }
 
+  static mergeSort() {
+    // STUB
+  }
   static insertionSort() {
     // STUB
   }
 
-  static mergeSort() {
-    // STUB
-  }
 }
 
 module.exports = { SortingAlgorithms };

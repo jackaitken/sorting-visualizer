@@ -49,7 +49,20 @@ function App() {
           }
           firstBarStyle.background = 'black';
           secondBarStyle.background = 'black';
+
+          if (animationArr[i].sorted) {
+            secondBarStyle.background = 'orange';
+          }
         }, (i + 1) * sortSpeed);
+
+        setTimeout(() => {
+          animationArr.forEach((_, idx) => {
+            let bar = document.getElementById(`arrayBar${idx}`);
+            if (bar.style.background !== 'orange') {
+              bar.style.background = 'orange';
+            }
+          });
+        }, (animationArr.length + 1) * sortSpeed);
       }
     } else {
       animationIsSet.current = true;
