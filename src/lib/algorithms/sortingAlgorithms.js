@@ -96,7 +96,6 @@ class SortingAlgorithms {
           break;
         } else {
           animationArr.push(addToObject(left, right, pivotIndex, true));
-          
           [ array[left], array[right] ] = [ array[right], array[left] ];
           left += 1;
           animationArr.push(addToObject(left, right, pivotIndex));

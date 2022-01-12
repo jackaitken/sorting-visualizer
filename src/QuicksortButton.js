@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './styles/AppStyles.module.css';
 
-function QuicksortButton({ handleClick }) {
+function QuicksortButton({ handleClick, disabled }) {
   return (
     <button
     onClick={handleClick}
-    className={styles.algoButton}>
+    className={styles.algoButton}
+    disabled={disabled}>
     Quicksort</button>
   );
 }

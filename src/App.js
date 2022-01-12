@@ -16,22 +16,30 @@ function App() {
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ sortSpeed, setSortSpeed ] = useState('50');
-  // const [ algorithm, setAlgorithm ] = useState(SortingAlgorithms.algorithms['bubble']);
-  const animationIsSet = useRef(false);
+  const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
+
+  function handleSetNewArray() {
+    setArray(getRandomArray(arraySize));
+    setButtonsDisabled(false);
+  }
 
   function handleBubbleSortAnimation(sortAlgorithm) { 
+    setButtonsDisabled(true);
     setBubbleAnimation(sortAlgorithm([...array]));
   }
 
   function handleQuicksortAnimation(sortAlgorithm) {
+    setButtonsDisabled(true);
     setQuicksortAnimation(sortAlgorithm([...array]));
   }
 
   useEffect(() => {
+    setButtonsDisabled(false);
     setArray(getRandomArray(arraySize));
   }, [arraySize]);
 
   useEffect(() => {
+    document.getElementsByClassName(styles.algoButton).disabled = false;
     array.forEach((_, index) => {
       document.getElementById(`arrayBar${index}`).style.background = 'black';
     });
@@ -59,18 +67,32 @@ function App() {
             [ leftBarStyle.height, rightBarStyle.height ] = [ rightBarStyle.height, leftBarStyle.height ];
           } else if (quicksortAnimation[i].swapLeftPivot) {
             [ leftBarStyle.height, pivotBarStyle.height ] = [ pivotBarStyle.height, leftBarStyle.height ];
+            
             pivotBarStyle.background = 'black';
+            leftBarStyle.background = 'orange';
           }
 
-          leftBarStyle.background = 'black';
+          if (leftBarStyle.background !== 'orange') {
+            leftBarStyle.background = 'black';
+          }
           rightBarStyle.background = 'black';
         }, (i + 1) * sortSpeed);
+
+        setTimeout(() => {
+          array.forEach((_, idx) => {
+            let bar = document.getElementById(`arrayBar${idx}`);
+            if (bar.style.background !== 'orange') {
+              bar.style.background = 'orange';
+            }
+          });
+        }, (quicksortAnimation.length + 1) * sortSpeed);
       }
+      clearTimeout();
     }
   }, [quicksortAnimation]);
 
   useEffect(() => {
-    if (bubbleAnimation) {      
+    if (bubbleAnimation) {     
       for (let i = 0; i < bubbleAnimation.length; i++) {
         let [ indexOne, indexTwo ] = bubbleAnimation[i].startState;
         let firstBarStyle = document.getElementById(`arrayBar${indexOne}`).style;
@@ -94,7 +116,7 @@ function App() {
         }, (i + 1) * sortSpeed);
 
         setTimeout(() => {
-          bubbleAnimation.forEach((_, idx) => {
+          array.forEach((_, idx) => {
             let bar = document.getElementById(`arrayBar${idx}`);
             if (bar.style.background !== 'orange') {
               bar.style.background = 'orange';
@@ -108,9 +130,9 @@ function App() {
   return (
     <>
       <div className={styles.buttonWrapper}>
-        <SetNewArrayButton handleClick={() => setArray(getRandomArray(arraySize))}/>
-        <BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} />
-        <QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} />
+        <SetNewArrayButton handleClick={handleSetNewArray}/>
+        <BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={buttonsDisabled} />
+        <QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={buttonsDisabled} />
         <SortSpeedSlider handleChange={setSortSpeed}/>
         <ChangeArraySizeSlide handleChange={setArraySize} />
       </div>      
