@@ -55,6 +55,22 @@ class SortingAlgorithms {
       quicksort(left, pivotIndex - 1);
       quicksort(pivotIndex + 1, right);
     }
+
+    function addToObject(left, right, pivotIndex, leftSwap, pivotSwap) {
+      let animationObj = {};
+      animationObj.left = left;
+      animationObj.right = right <= 0 ? 0 : right;
+      animationObj.pivot = pivotIndex;
+      if (leftSwap) {
+        animationObj.swapLeftRight = true;
+      }
+
+      if (pivotSwap) {
+        animationObj.swapLeftPivot = true;
+      }
+      
+      return animationObj;
+    }
   
     function partition(left, right) {
       let pivotIndex = right;
@@ -62,57 +78,31 @@ class SortingAlgorithms {
       right -= 1;
   
       let animationArr = [];
-      let animationObj = {};
-  
-      animationObj.left = left;
-      animationObj.right = right <= 0 ? 0 : right;
-      animationObj.pivot = pivotIndex;
-      animationArr.push(animationObj);
-      animationObj = {};
+
+      animationArr.push(addToObject(left, right, pivotIndex));
   
       while (true) {
         while (array[left] < pivot) {
           left += 1;
-          animationObj.left = left;
-          animationObj.right = right <= 0 ? 0 : right;
-          animationObj.pivot = pivotIndex;
-          animationArr.push(animationObj);
-          animationObj = {};
+          animationArr.push(addToObject(left, right, pivotIndex));
         }
   
         while (array[right] > pivot) {
           right -= 1;
-          animationObj.left = left;
-          animationObj.right = right <= 0 ? 0 : right;
-          animationObj.pivot = pivotIndex;
-          animationArr.push(animationObj);
-          animationObj = {};
+          animationArr.push(addToObject(left, right, pivotIndex));
         }
   
         if (left >= right) {
           break;
         } else {
-          animationObj.left = left;
-          animationObj.right = right <= 0 ? 0 : right;
-          animationObj.pivot = pivotIndex;
-          animationObj.swapLeftRight = true;
-          animationArr.push(animationObj);
-          animationObj = {};
+          animationArr.push(addToObject(left, right, pivotIndex, true));
+          
           [ array[left], array[right] ] = [ array[right], array[left] ];
           left += 1;
-          animationObj.left = left;
-          animationObj.right = right <= 0 ? 0 : right;
-          animationObj.pivot = pivotIndex;
-          animationArr.push(animationObj);
-          animationObj = {};
+          animationArr.push(addToObject(left, right, pivotIndex));
         }
       }
-      animationObj.left = left;
-      animationObj.right = right <= 0 ? 0 : right;
-      animationObj.pivot = pivotIndex;
-      animationObj.swapLeftPivot = true;
-      animationArr.push(animationObj);
-      animationObj = {};
+      animationArr.push(addToObject(left, right, pivotIndex, false, true));
   
       [ array[left], array[pivotIndex] ] = [ array[pivotIndex], array[left] ];
       return [ left, animationArr];
