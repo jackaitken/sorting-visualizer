@@ -3,6 +3,7 @@ import { getRandomArray } from './lib/getRandomArray'
 import ArrayRepresentation from './ArrayRepresentation';
 import SetNewArrayButton from './SetNewArrayButton';
 import BubbleSortButton from './BubbleSortButton';
+import QuicksortButton from './QuicksortButton';
 import SortSpeedSlider from './SortSpeedSlider';
 import ChangeArraySizeSlide from './ChangeArraySizeSlider';
 import { SortingAlgorithms } from './lib/algorithms/sortingAlgorithms';
@@ -12,13 +13,18 @@ import { compareSort } from './lib/algorithms/testSort';
 function App() {
   const [ arraySize, setArraySize ] = useState(50);
   const [ array, setArray ] = useState(getRandomArray(arraySize));
-  const [ animationArr, setAnimationArr ] = useState();
+  const [ quicksortAnimation, setQuicksortAnimation ] = useState();
+  const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ sortSpeed, setSortSpeed ] = useState('50');
   // const [ algorithm, setAlgorithm ] = useState(SortingAlgorithms.algorithms['bubble']);
   const animationIsSet = useRef(false);
 
   function handleBubbleSortAnimation(sortAlgorithm) { 
-    setAnimationArr(sortAlgorithm([...array]));
+    setBubbleAnimation(sortAlgorithm([...array]));
+  }
+
+  function handleQuicksortAnimation(sortAlgorithm) {
+    setQuicksortAnimation(sortAlgorithm([...array]));
   }
 
   useEffect(() => {
@@ -32,9 +38,41 @@ function App() {
   }, [array]);
 
   useEffect(() => {
-    if (animationIsSet.current) {      
-      for (let i = 0; i < animationArr.length; i++) {
-        let [ indexOne, indexTwo ] = animationArr[i].startState;
+    if (quicksortAnimation) {
+      for (let i = 0; i < quicksortAnimation.length; i++) {
+        let leftBar = quicksortAnimation[i].left;
+        let rightBar = quicksortAnimation[i].right;
+        let pivotBar = quicksortAnimation[i].pivot;
+
+        let leftBarStyle = document.getElementById(`arrayBar${leftBar}`).style;
+        let rightBarStyle = document.getElementById(`arrayBar${rightBar}`).style;
+        let pivotBarStyle  = document.getElementById(`arrayBar${pivotBar}`).style;
+
+        setTimeout(() => {
+          leftBarStyle.background = 'red';
+          rightBarStyle.background = 'red';
+          pivotBarStyle.background = 'blue';
+        }, i * sortSpeed);
+
+        setTimeout(() => {
+          if (quicksortAnimation[i].swapLeftRight) {
+            [ leftBarStyle.height, rightBarStyle.height ] = [ rightBarStyle.height, leftBarStyle.height ];
+          } else if (quicksortAnimation[i].swapLeftPivot) {
+            [ leftBarStyle.height, pivotBarStyle.height ] = [ pivotBarStyle.height, leftBarStyle.height ];
+            pivotBarStyle.background = 'black';
+          }
+
+          leftBarStyle.background = 'black';
+          rightBarStyle.background = 'black';
+        }, (i + 1) * sortSpeed);
+      }
+    }
+  }, [quicksortAnimation]);
+
+  useEffect(() => {
+    if (bubbleAnimation) {      
+      for (let i = 0; i < bubbleAnimation.length; i++) {
+        let [ indexOne, indexTwo ] = bubbleAnimation[i].startState;
         let firstBarStyle = document.getElementById(`arrayBar${indexOne}`).style;
         let secondBarStyle = document.getElementById(`arrayBar${indexTwo}`).style;
 
@@ -44,36 +82,35 @@ function App() {
         }, i * sortSpeed);
 
         setTimeout(() => {
-          if (animationArr[i].swap) {
+          if (bubbleAnimation[i].swap) {
             [ firstBarStyle.height, secondBarStyle.height ] = [ secondBarStyle.height, firstBarStyle.height ];
           }
           firstBarStyle.background = 'black';
           secondBarStyle.background = 'black';
 
-          if (animationArr[i].sorted) {
+          if (bubbleAnimation[i].sorted) {
             secondBarStyle.background = 'orange';
           }
         }, (i + 1) * sortSpeed);
 
         setTimeout(() => {
-          animationArr.forEach((_, idx) => {
+          bubbleAnimation.forEach((_, idx) => {
             let bar = document.getElementById(`arrayBar${idx}`);
             if (bar.style.background !== 'orange') {
               bar.style.background = 'orange';
             }
           });
-        }, (animationArr.length + 1) * sortSpeed);
+        }, (bubbleAnimation.length + 1) * sortSpeed);
       }
-    } else {
-      animationIsSet.current = true;
     }
-  }, [animationArr]);
+  }, [bubbleAnimation]);
 
   return (
     <>
       <div className={styles.buttonWrapper}>
         <SetNewArrayButton handleClick={() => setArray(getRandomArray(arraySize))}/>
         <BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} />
+        <QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} />
         <SortSpeedSlider handleChange={setSortSpeed}/>
         <ChangeArraySizeSlide handleChange={setArraySize} />
       </div>      
@@ -85,13 +122,3 @@ function App() {
 }
 
 export default App;
-
-
-/*
-Testing buttons
-
-<button className={styles.algoButton} onClick={() => compareSort(array, algorithms['bubble'])}>Bubble Sort</button>
-<button className={styles.algoButton} onClick={() => compareSort(array, algorithms['quick'])}>Quicksort</button>
-<button className={styles.algoButton} onClick={() => compareSort(array, algorithms['insertion'])}>Insertion Sort</button>
-<button className={styles.algoButton} onClick={() => compareSort(array, algorithms['merge'])}>Merge Sort</button>
-*/

@@ -1,5 +1,4 @@
 function getRandomArray(size) {
-  console.log(size);
   let randomizedArray = [];
   let min = 1;
   let max = 500;
