@@ -6,7 +6,7 @@ function SetNewArrayButton({ handleClick }) {
     <button
     onClick={handleClick}
     className={styles.algoButton}>
-    Randomize</button>
+    Get new array</button>
   );
 }
 

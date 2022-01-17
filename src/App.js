@@ -4,6 +4,7 @@ import ArrayRepresentation from './ArrayRepresentation';
 import SetNewArrayButton from './SetNewArrayButton';
 import BubbleSortButton from './BubbleSortButton';
 import QuicksortButton from './QuicksortButton';
+import InsertionSortButton from './InsertionSortButton';
 import SortSpeedSlider from './SortSpeedSlider';
 import ChangeArraySizeSlide from './ChangeArraySizeSlider';
 import { SortingAlgorithms } from './lib/algorithms/sortingAlgorithms';
@@ -15,6 +16,7 @@ function App() {
   const [ array, setArray ] = useState(getRandomArray(arraySize));
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
+  const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
   const [ sortSpeed, setSortSpeed ] = useState('50');
   const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
 
@@ -32,6 +34,40 @@ function App() {
     setButtonsDisabled(true);
     setQuicksortAnimation(sortAlgorithm([...array]));
   }
+
+  function handleInsertionSortAnimation(sortAlgorithm) {
+    setButtonsDisabled(true);
+    setInsertionSortAnimation(sortAlgorithm([...array]));
+  }
+
+  useEffect(() => {
+    if (insertionSortAnimation) {
+      console.log(insertionSortAnimation);
+      for (let i = 0; i < insertionSortAnimation.length; i++) {
+        let tempIndex = insertionSortAnimation[i].temp;
+        let curIndex = insertionSortAnimation[i].curIndex;
+        
+        let tempIndexStyle = document.getElementById(`arrayBar${tempIndex}`).style;
+        let curIndexStyle = document.getElementById(`arrayBar${curIndex}`).style;
+        let nextIndexStyle = document.getElementById(`arrayBar${curIndex + 1}`).style;
+
+        setTimeout(() => {
+          // debugger;
+          tempIndexStyle.background = 'red';
+          curIndexStyle.background = 'blue';
+        }, i * sortSpeed);
+
+        setTimeout(() => {
+          if (insertionSortAnimation[i].curIndexShift) {
+            [ curIndexStyle.height, nextIndexStyle.height ] = 
+              [ nextIndexStyle.height, curIndexStyle.height ];
+          }
+          curIndexStyle.background = 'black';
+          tempIndexStyle.background = 'black';
+        }, (i + 1) * sortSpeed);
+      }
+    }
+  }, [insertionSortAnimation]);
 
   useEffect(() => {
     setButtonsDisabled(false);
@@ -87,7 +123,6 @@ function App() {
           });
         }, (quicksortAnimation.length + 1) * sortSpeed);
       }
-      clearTimeout();
     }
   }, [quicksortAnimation]);
 
@@ -133,6 +168,7 @@ function App() {
         <SetNewArrayButton handleClick={handleSetNewArray}/>
         <BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={buttonsDisabled} />
         <QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={buttonsDisabled} />
+        <InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={buttonsDisabled} />
         <SortSpeedSlider handleChange={setSortSpeed}/>
         <ChangeArraySizeSlide handleChange={setArraySize} />
       </div>      

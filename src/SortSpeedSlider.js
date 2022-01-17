@@ -15,8 +15,8 @@ function SortSpeedSlider({ handleChange }) {
       <input 
       name='speedSlider'
       type='range' 
-      min='1'
-      max='80'
+      min='0.5'
+      max='90'
       onMouseUp={handleSpeedChange}></input>
     </div>
   )

@@ -114,10 +114,43 @@ class SortingAlgorithms {
   static mergeSort() {
     // STUB
   }
-  static insertionSort() {
-    // STUB
-  }
+  static insertionSortWrapper(array) {
+    function insertionSort(array) {
+      let animationArr = [];
+    
+      for (let i = 1; i < array.length; i++) {
+        let temp = array[i];
+        let curIndex = i - 1;
+    
+        while (curIndex >= 0) {
+          animationArr.push(insertionAddToObject(i, curIndex));
+          if (array[curIndex] > temp) {
+            animationArr.push(insertionAddToObject(i, curIndex, true));
 
+            // swap height of value at curIndex + 1 with height of curIndex
+            array[curIndex + 1] = array[curIndex];
+            curIndex -= 1;
+          } else {
+            break;
+          }
+        }
+        array[curIndex + 1] = temp;
+      }
+      return animationArr;
+    }
+    
+    function insertionAddToObject(temp, curIndex, curIndexShift) {
+      let animationObj = {};
+      animationObj.temp = temp;
+      animationObj.curIndex = curIndex <= 0 ? 0 : curIndex;
+      if (curIndexShift) {
+        animationObj.curIndexShift = true;
+      }
+    
+      return animationObj;
+    }
+    return insertionSort(array);
+  }
 }
 
 module.exports = { SortingAlgorithms };
