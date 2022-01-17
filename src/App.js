@@ -49,22 +49,34 @@ function App() {
         
         let tempIndexStyle = document.getElementById(`arrayBar${tempIndex}`).style;
         let curIndexStyle = document.getElementById(`arrayBar${curIndex}`).style;
-        let nextIndexStyle = document.getElementById(`arrayBar${curIndex + 1}`).style;
 
         setTimeout(() => {
-          // debugger;
-          tempIndexStyle.background = 'red';
-          curIndexStyle.background = 'blue';
+          if (insertionSortAnimation[i].curIndexShift) {
+            tempIndexStyle.background = 'blue';
+            curIndexStyle.background = 'red';
+          } else {
+            tempIndexStyle.background = 'red';
+            curIndexStyle.background = 'blue';
+          }
         }, i * sortSpeed);
 
         setTimeout(() => {
           if (insertionSortAnimation[i].curIndexShift) {
-            [ curIndexStyle.height, nextIndexStyle.height ] = 
-              [ nextIndexStyle.height, curIndexStyle.height ];
+            [ curIndexStyle.height, tempIndexStyle.height ] = 
+              [ tempIndexStyle.height, curIndexStyle.height ];
           }
           curIndexStyle.background = 'black';
           tempIndexStyle.background = 'black';
         }, (i + 1) * sortSpeed);
+
+        setTimeout(() => {
+          array.forEach((_, idx) => {
+            let bar = document.getElementById(`arrayBar${idx}`);
+            if (bar.style.background !== 'orange') {
+              bar.style.background = 'orange';
+            }
+          });
+        }, (insertionSortAnimation.length + 1) * sortSpeed);
       }
     }
   }, [insertionSortAnimation]);

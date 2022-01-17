@@ -120,13 +120,14 @@ class SortingAlgorithms {
     
       for (let i = 1; i < array.length; i++) {
         let temp = array[i];
+        let animationTemp = i;
         let curIndex = i - 1;
     
         while (curIndex >= 0) {
-          animationArr.push(insertionAddToObject(i, curIndex));
+          animationArr.push(insertionAddToObject(animationTemp, curIndex));
           if (array[curIndex] > temp) {
-            animationArr.push(insertionAddToObject(i, curIndex, true));
-
+            animationTemp -= 1;
+            animationArr.push(insertionAddToObject(animationTemp, curIndex + 1, true));
             // swap height of value at curIndex + 1 with height of curIndex
             array[curIndex + 1] = array[curIndex];
             curIndex -= 1;
@@ -134,6 +135,7 @@ class SortingAlgorithms {
             break;
           }
         }
+        // swap height of value at curIndex + 1 and temp
         array[curIndex + 1] = temp;
       }
       return animationArr;
@@ -141,7 +143,7 @@ class SortingAlgorithms {
     
     function insertionAddToObject(temp, curIndex, curIndexShift) {
       let animationObj = {};
-      animationObj.temp = temp;
+      animationObj.temp = temp <= 0 ? 0 : temp;
       animationObj.curIndex = curIndex <= 0 ? 0 : curIndex;
       if (curIndexShift) {
         animationObj.curIndexShift = true;
