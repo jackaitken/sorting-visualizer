@@ -5,11 +5,13 @@ import SetNewArrayButton from './SetNewArrayButton';
 import BubbleSortButton from './BubbleSortButton';
 import QuicksortButton from './QuicksortButton';
 import InsertionSortButton from './InsertionSortButton';
+import MegerSortButton from './MergeSortButton';
 import SortSpeedSlider from './SortSpeedSlider';
 import ChangeArraySizeSlide from './ChangeArraySizeSlider';
 import { SortingAlgorithms } from './lib/algorithms/sortingAlgorithms';
 import styles from './styles/AppStyles.module.css';
 import { compareSort } from './lib/algorithms/testSort';
+import MergeSortButton from './MergeSortButton';
 
 function App() {
   const [ arraySize, setArraySize ] = useState(50);
@@ -17,6 +19,7 @@ function App() {
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
+  const [ mergeSortAnimation, setMergeSortAnimation ] = useState();
   const [ sortSpeed, setSortSpeed ] = useState('50');
   const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
 
@@ -40,46 +43,33 @@ function App() {
     setInsertionSortAnimation(sortAlgorithm([...array]));
   }
 
+  function handleMergeSortAnimation(sortAlgorithm) {
+    setButtonsDisabled(true);
+    setMergeSortAnimation(sortAlgorithm([...array]));
+  }
+
   useEffect(() => {
-    if (insertionSortAnimation) {
-      console.log(insertionSortAnimation);
-      for (let i = 0; i < insertionSortAnimation.length; i++) {
-        let tempIndex = insertionSortAnimation[i].temp;
-        let curIndex = insertionSortAnimation[i].curIndex;
-        
-        let tempIndexStyle = document.getElementById(`arrayBar${tempIndex}`).style;
-        let curIndexStyle = document.getElementById(`arrayBar${curIndex}`).style;
+    if (mergeSortAnimation) {
+      for (let i = 0; i < mergeSortAnimation.length; i++) {
+        let range = mergeSortAnimation[i].range;
+        let newArr = mergeSortAnimation[i].newArrState;
 
         setTimeout(() => {
-          if (insertionSortAnimation[i].curIndexShift) {
-            tempIndexStyle.background = 'blue';
-            curIndexStyle.background = 'red';
-          } else {
-            tempIndexStyle.background = 'red';
-            curIndexStyle.background = 'blue';
+          for (let i = 0; i < range.length; i++) {
+            let barStyle = document.getElementById(`arrayBar${range[i]}`).style;
+            barStyle.background = 'red';
           }
         }, i * sortSpeed);
 
         setTimeout(() => {
-          if (insertionSortAnimation[i].curIndexShift) {
-            [ curIndexStyle.height, tempIndexStyle.height ] = 
-              [ tempIndexStyle.height, curIndexStyle.height ];
+          for (let i = 0; i < range.length; i++) {
+            let newBarHeight = document.getElementById(`arrayBar${range[i]}`).style;
+            newBarHeight.height = `${newArr[range[i]]}px`;
           }
-          curIndexStyle.background = 'black';
-          tempIndexStyle.background = 'black';
         }, (i + 1) * sortSpeed);
-
-        setTimeout(() => {
-          array.forEach((_, idx) => {
-            let bar = document.getElementById(`arrayBar${idx}`);
-            if (bar.style.background !== 'orange') {
-              bar.style.background = 'orange';
-            }
-          });
-        }, (insertionSortAnimation.length + 1) * sortSpeed);
       }
     }
-  }, [insertionSortAnimation]);
+  }, [mergeSortAnimation]);
 
   useEffect(() => {
     setButtonsDisabled(false);
@@ -174,6 +164,46 @@ function App() {
     }
   }, [bubbleAnimation]);
 
+  useEffect(() => {
+    if (insertionSortAnimation) {
+      for (let i = 0; i < insertionSortAnimation.length; i++) {
+        let tempIndex = insertionSortAnimation[i].temp;
+        let curIndex = insertionSortAnimation[i].curIndex;
+        
+        let tempIndexStyle = document.getElementById(`arrayBar${tempIndex}`).style;
+        let curIndexStyle = document.getElementById(`arrayBar${curIndex}`).style;
+
+        setTimeout(() => {
+          if (insertionSortAnimation[i].curIndexShift) {
+            tempIndexStyle.background = 'blue';
+            curIndexStyle.background = 'red';
+          } else {
+            tempIndexStyle.background = 'red';
+            curIndexStyle.background = 'blue';
+          }
+        }, i * sortSpeed);
+
+        setTimeout(() => {
+          if (insertionSortAnimation[i].curIndexShift) {
+            [ curIndexStyle.height, tempIndexStyle.height ] = 
+              [ tempIndexStyle.height, curIndexStyle.height ];
+          }
+          curIndexStyle.background = 'black';
+          tempIndexStyle.background = 'black';
+        }, (i + 1) * sortSpeed);
+
+        setTimeout(() => {
+          array.forEach((_, idx) => {
+            let bar = document.getElementById(`arrayBar${idx}`);
+            if (bar.style.background !== 'orange') {
+              bar.style.background = 'orange';
+            }
+          });
+        }, (insertionSortAnimation.length + 1) * sortSpeed);
+      }
+    }
+  }, [insertionSortAnimation]);
+
   return (
     <>
       <div className={styles.buttonWrapper}>
@@ -181,6 +211,7 @@ function App() {
         <BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={buttonsDisabled} />
         <QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={buttonsDisabled} />
         <InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={buttonsDisabled} />
+        <MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={buttonsDisabled} />
         <SortSpeedSlider handleChange={setSortSpeed}/>
         <ChangeArraySizeSlide handleChange={setArraySize} />
       </div>      

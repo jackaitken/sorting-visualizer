@@ -153,6 +153,81 @@ class SortingAlgorithms {
     }
     return insertionSort(array);
   }
+
+  static mergeSortWrapper(arr) { 
+    let curArrayState = arr;
+    let animationArr = [];
+  
+    function mergeSort(arr) {
+      if (arr.length <= 1) return arr;
+    
+      let midPoint = Math.floor(arr.length / 2);
+  
+      let leftPart = 0;
+      let rightPart = arr.length - 1;
+  
+      let left = mergeSort(arr.slice(leftPart, midPoint));
+      let right = mergeSort(arr.slice(midPoint));
+    
+      return mergeTwoSortedArrs(left, right);
+    }
+    
+    function mergeTwoSortedArrs(arr1, arr2) {
+      let startIndex = getStartIndex(arr1, arr2);
+      let sortedArr = [];
+    
+      while (arr1.length && arr2.length) {
+        if (arr1[0] > arr2[0]) {
+          sortedArr.push(arr2.shift());
+        } else {
+          sortedArr.push(arr1.shift());
+        }
+      }
+      sortedArr = sortedArr.concat(arr1, arr2);
+      let pastArrState = curArrayState.slice();
+      updateCurArrayState(startIndex, sortedArr);
+      animationArr.push(mergeAddToObject(startIndex, sortedArr.length, pastArrState));
+      return sortedArr;
+    }
+  
+    function mergeAddToObject(startRange, rangeLength, pastArr) {
+      let animationObj = {};
+      let range = [];
+      let counter = 0;
+  
+      while (counter < rangeLength) {
+        range.push(startRange);
+        startRange += 1;
+        counter += 1;
+      }
+  
+      animationObj.range = range;
+      animationObj.pastArrState = pastArr;
+      animationObj.newArrState = curArrayState.slice();
+      return animationObj;
+    }
+  
+    function updateCurArrayState(startIndex, subArr) {
+      for (let i = 0; i < subArr.length; i++) {
+        curArrayState[startIndex + i] = subArr[i];
+      }
+    }
+  
+    function getStartIndex(arr1, arr2) {
+      let combinedArr = combineArrays(arr1, arr2);
+      let startIndex = curArrayState.indexOf(combinedArr[0]);
+      return startIndex;
+    }
+  
+    function combineArrays(arr1, arr2) {
+      if (arr1 && arr2) {
+        return arr1.concat(arr2);
+      }
+      return arr1;
+    }
+    mergeSort(arr);
+    return animationArr;
+  }
 }
 
 module.exports = { SortingAlgorithms };
