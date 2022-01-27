@@ -5,8 +5,6 @@ function ArrayRepresentation(props) {
   let listItems = props.array.map((num, idx) => 
     <>
       <div
-      // onMouseEnter={hover}
-      // onMouseLeave={leaveHover}
       className={styles.arrayBar}
       style={{height: `${num}px`}}
       key={idx}
