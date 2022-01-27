@@ -6,6 +6,7 @@ function InsertionSortButton({ handleClick, disabled }) {
     <button
     onClick={handleClick}
     className={styles.algoButton}
+    className={'contrast outline'}
     disabled={disabled}>
     Insertion Sort</button>
   );

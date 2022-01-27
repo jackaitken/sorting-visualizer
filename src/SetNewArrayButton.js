@@ -5,7 +5,9 @@ function SetNewArrayButton({ handleClick }) {
   return (
     <button
     onClick={handleClick}
-    className={styles.algoButton}>
+    className={styles.algoButton}
+    className={'outline'}
+    >
     Get new array</button>
   );
 }

@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './styles/ArrayRepresentation.module.css';
 
 function ArrayRepresentation(props) {
-  let listItems = props.array.map((num, idx) =>
-    <div
-    className={styles.arrayBar}
-    style={{height: `${num}px`}}
-    key={idx}
-    id={`arrayBar${idx}`}>
-    </div>
+  let listItems = props.array.map((num, idx) => 
+    <>
+      <div
+      // onMouseEnter={hover}
+      // onMouseLeave={leaveHover}
+      className={styles.arrayBar}
+      style={{height: `${num}px`}}
+      key={idx}
+      id={`arrayBar${idx}`}
+      data-tooltip={num}
+      >
+      </div>
+    </>
   );
 
   return (

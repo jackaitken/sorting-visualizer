@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getRandomArray } from './lib/getRandomArray'
 import ArrayRepresentation from './ArrayRepresentation';
 import SetNewArrayButton from './SetNewArrayButton';
 import BubbleSortButton from './BubbleSortButton';
 import QuicksortButton from './QuicksortButton';
 import InsertionSortButton from './InsertionSortButton';
-import MegerSortButton from './MergeSortButton';
 import SortSpeedSlider from './SortSpeedSlider';
 import ChangeArraySizeSlide from './ChangeArraySizeSlider';
 import { SortingAlgorithms } from './lib/algorithms/sortingAlgorithms';
 import styles from './styles/AppStyles.module.css';
-import { compareSort } from './lib/algorithms/testSort';
 import MergeSortButton from './MergeSortButton';
 
 function App() {
@@ -22,6 +20,7 @@ function App() {
   const [ mergeSortAnimation, setMergeSortAnimation ] = useState();
   const [ sortSpeed, setSortSpeed ] = useState('50');
   const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
+  const [ animationFinished, setAnimationFinished ] = useState(false);
 
   function handleSetNewArray() {
     setArray(getRandomArray(arraySize));
@@ -48,6 +47,42 @@ function App() {
     setMergeSortAnimation(sortAlgorithm([...array]));
   }
 
+  // function getWindowDimensions() {
+  //   let { innerWidth: width } = window;
+  //   return { width };
+  // }
+
+  // function useWindowDimensions() {
+  //   const [ windowDimensions, setWindowDimensions ] = useState(getWindowDimensions());
+    
+  //   useEffect(() => {
+  //     function handleResize() {
+  //       setWindowDimensions(getWindowDimensions());
+  //     }
+  
+  //     window.addEventListener('resize', handleResize);
+  //     return () => window.removeEventListener('resize', handleResize);
+  //   }, [arraySize]);
+  //   return windowDimensions;
+  // }
+
+  // let { width } = useWindowDimensions();
+  // console.log(width);
+
+  // if (width < 1205) {
+  //   setArraySize(arraySize - (1205 - width));
+  //   console.log(arraySize);
+  // }
+
+  useEffect(() => {
+    const END_OF_HEIGHT = 'p';
+    for (let i = 0; i < array.length; i++) {
+      let barHeight = document.getElementById(`arrayBar${i}`).style.height;
+      barHeight = barHeight.slice(0, barHeight.indexOf(END_OF_HEIGHT)); 
+      document.getElementById(`arrayBar${i}`).setAttribute('data-tooltip', barHeight);
+    }
+  }, [animationFinished])
+
   useEffect(() => {
     if (mergeSortAnimation) {
       for (let i = 0; i < mergeSortAnimation.length; i++) {
@@ -63,8 +98,10 @@ function App() {
 
         setTimeout(() => {
           for (let i = 0; i < range.length; i++) {
+            setAnimationFinished(false);
             let newBarHeight = document.getElementById(`arrayBar${range[i]}`).style;
             newBarHeight.height = `${newArr[range[i]]}px`;
+            setAnimationFinished(true);
           }
         }, (i + 1) * sortSpeed);
       }
@@ -101,6 +138,7 @@ function App() {
         }, i * sortSpeed);
 
         setTimeout(() => {
+          setAnimationFinished(false);
           if (quicksortAnimation[i].swapLeftRight) {
             [ leftBarStyle.height, rightBarStyle.height ] = [ rightBarStyle.height, leftBarStyle.height ];
           } else if (quicksortAnimation[i].swapLeftPivot) {
@@ -114,6 +152,7 @@ function App() {
             leftBarStyle.background = 'black';
           }
           rightBarStyle.background = 'black';
+          setAnimationFinished(true);
         }, (i + 1) * sortSpeed);
 
         setTimeout(() => {
@@ -141,6 +180,7 @@ function App() {
         }, i * sortSpeed);
 
         setTimeout(() => {
+          setAnimationFinished(false);
           if (bubbleAnimation[i].swap) {
             [ firstBarStyle.height, secondBarStyle.height ] = [ secondBarStyle.height, firstBarStyle.height ];
           }
@@ -150,6 +190,7 @@ function App() {
           if (bubbleAnimation[i].sorted) {
             secondBarStyle.background = 'orange';
           }
+          setAnimationFinished(true);
         }, (i + 1) * sortSpeed);
 
         setTimeout(() => {
@@ -184,12 +225,14 @@ function App() {
         }, i * sortSpeed);
 
         setTimeout(() => {
+          setAnimationFinished(false);
           if (insertionSortAnimation[i].curIndexShift) {
             [ curIndexStyle.height, tempIndexStyle.height ] = 
               [ tempIndexStyle.height, curIndexStyle.height ];
           }
           curIndexStyle.background = 'black';
           tempIndexStyle.background = 'black';
+          setAnimationFinished(true);
         }, (i + 1) * sortSpeed);
 
         setTimeout(() => {
@@ -206,14 +249,26 @@ function App() {
 
   return (
     <>
+      <nav>
+        <ul>
+          <li>
+          <h2>Sort Visualizer</h2>
+          </li>
+        </ul>
+        <ul>
+          <li><MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={buttonsDisabled} /></li>
+          <li><InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={buttonsDisabled} /></li>
+          <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={buttonsDisabled} /></li>
+          <li><BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={buttonsDisabled} /></li>
+        </ul>
+        <ul>
+          <li><SetNewArrayButton handleClick={handleSetNewArray}/></li>
+        </ul>
+      </nav>
+      <hr/>
       <div className={styles.buttonWrapper}>
-        <SetNewArrayButton handleClick={handleSetNewArray}/>
-        <BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={buttonsDisabled} />
-        <QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={buttonsDisabled} />
-        <InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={buttonsDisabled} />
-        <MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={buttonsDisabled} />
-        <SortSpeedSlider handleChange={setSortSpeed}/>
-        <ChangeArraySizeSlide handleChange={setArraySize} />
+        <SortSpeedSlider handleChange={setSortSpeed} disabled={buttonsDisabled}/>
+        <ChangeArraySizeSlide handleChange={setArraySize} disabled={buttonsDisabled}/>
       </div>      
       <div>
         <ArrayRepresentation array={array} />

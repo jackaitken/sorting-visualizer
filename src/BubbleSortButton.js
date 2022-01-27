@@ -6,6 +6,7 @@ function BubbleSortButton({ handleClick, disabled }) {
     <button
     onClick={handleClick}
     className={styles.algoButton}
+    className={'contrast outline'}
     disabled={disabled}>
     Bubble Sort</button>
   );

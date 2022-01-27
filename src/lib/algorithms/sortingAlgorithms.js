@@ -162,11 +162,7 @@ class SortingAlgorithms {
       if (arr.length <= 1) return arr;
     
       let midPoint = Math.floor(arr.length / 2);
-  
-      let leftPart = 0;
-      let rightPart = arr.length - 1;
-  
-      let left = mergeSort(arr.slice(leftPart, midPoint));
+      let left = mergeSort(arr.slice(0, midPoint));
       let right = mergeSort(arr.slice(midPoint));
     
       return mergeTwoSortedArrs(left, right);

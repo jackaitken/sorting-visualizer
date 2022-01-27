@@ -6,6 +6,7 @@ function QuicksortButton({ handleClick, disabled }) {
     <button
     onClick={handleClick}
     className={styles.algoButton}
+    className={'contrast outline'}
     disabled={disabled}>
     Quicksort</button>
   );
