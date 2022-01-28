@@ -37,10 +37,6 @@ function SortVisualizer() {
     });
   }, [array]);
 
-  
-
-  
-
   return (
     <>
       <nav>
