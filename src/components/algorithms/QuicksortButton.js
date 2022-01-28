@@ -1,15 +1,15 @@
 import React from 'react';
-import styles from './styles/AppStyles.module.css';
+import styles from '../../styles/AppStyles.module.css';
 
-function InsertionSortButton({ handleClick, disabled }) {
+function QuicksortButton({ handleClick, disabled }) {
   return (
     <button
     onClick={handleClick}
     className={styles.algoButton}
     className={'contrast outline'}
     disabled={disabled}>
-    Insertion Sort</button>
+    Quicksort</button>
   );
 }
 
-export default InsertionSortButton;
+export default QuicksortButton;

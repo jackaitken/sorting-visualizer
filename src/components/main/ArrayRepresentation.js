@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/ArrayRepresentation.module.css';
+import styles from '../../styles/ArrayRepresentation.module.css';
 
 function ArrayRepresentation(props) {
   let listItems = props.array.map((num, idx) => 

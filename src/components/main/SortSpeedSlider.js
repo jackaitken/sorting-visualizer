@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/AppStyles.module.css';
+import styles from '../../styles/AppStyles.module.css';
 
 const SPEED_OFFSET = 100;
 

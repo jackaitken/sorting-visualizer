@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/AppStyles.module.css';
+import styles from '../../styles/AppStyles.module.css';
 
 function ChangeArraySizeSlider({ handleChange, disabled }) {
   let handleSpeedChange = event => {
