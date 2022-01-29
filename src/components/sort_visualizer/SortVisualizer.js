@@ -13,11 +13,13 @@ function SortVisualizer() {
   const [ array, setArray ] = useState(getRandomArray(arraySize));
   const [ sortSpeed, setSortSpeed ] = useState('50');
   const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
+  const [ algorithmSelected, setAlgorithmSelected ] = useState(false);
 
   let settings = {
     array: array,
     sortSpeed: sortSpeed,
     buttons: [ buttonsDisabled, setButtonsDisabled ],
+    algorithm: [ algorithmSelected, setAlgorithmSelected ],
   }
   
   function handleSetNewArray() {
@@ -37,6 +39,8 @@ function SortVisualizer() {
     });
   }, [array]);
 
+  console.log(algorithmSelected);
+
   return (
     <>
       <nav>
@@ -54,6 +58,11 @@ function SortVisualizer() {
       </div>      
       <div>
         <ArrayRepresentation array={array} />
+      </div>
+      <div className={styles.algorithmInfo}>
+        {algorithmSelected  ? 
+        algorithmSelected : ''
+        }
       </div>
     </>
   );

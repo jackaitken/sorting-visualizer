@@ -1,39 +1,55 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SortingAlgorithms } from '../../lib/algorithms/sortingAlgorithms';
-import MergeSortButton from '../algorithms/MergeSortButton';
-import InsertionSortButton from '../algorithms/InsertionSortButton';
-import QuicksortButton from '../algorithms/QuicksortButton';
-import BubbleSortButton from '../algorithms/BubbleSortButton';
+import MergeSortButton from './merge_sort/MergeSortButton';
+import InsertionSortButton from './insertion_sort/InsertionSortButton';
+import QuicksortButton from './quicksort/QuicksortButton';
+import BubbleSortButton from './bubble_sort/BubbleSortButton';
 import ArrayContext from '../ArrayContext';
+import QuicksortInfo from '../algorithms/quicksort/QuicksortInfo';
+import InsertionSortInfo from '../algorithms/insertion_sort/InsertionSortInfo';
+import BubbleSortInfo from '../algorithms/bubble_sort/BubbleSortInfo';
+import MergeSortInfo from '../algorithms/merge_sort/MergeSortInfo';
 
 function Algorithms() {
-  const { array, sortSpeed, buttons } = useContext(ArrayContext);
+  const { array, sortSpeed, buttons, algorithm } = useContext(ArrayContext);
 
   const [ childButtonsDisabled, setChildButtonsDisabled ] = buttons;
+  const [ childAlgorithmSelected, setChildAlgorithmSelected ] = algorithm;
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
   const [ mergeSortAnimation, setMergeSortAnimation ] = useState();
   const [ animationFinished, setAnimationFinished ] = useState(false);
 
+  let algorithmInformation = {
+    merge: <MergeSortInfo/>,
+    insertion: <InsertionSortInfo/>,
+    quick: <QuicksortInfo/>,
+    bubble: <BubbleSortInfo/>,
+  }
+
   function handleMergeSortAnimation(sortAlgorithm) {
     setChildButtonsDisabled(true);
     setMergeSortAnimation(sortAlgorithm([...array]));
+    setChildAlgorithmSelected(algorithmInformation['merge']);
   }
 
   function handleInsertionSortAnimation(sortAlgorithm) {
     setChildButtonsDisabled(true);
     setInsertionSortAnimation(sortAlgorithm([...array]));
+    setChildAlgorithmSelected(algorithmInformation['insertion']);
   }
   
   function handleQuicksortAnimation(sortAlgorithm) {
     setChildButtonsDisabled(true);
     setQuicksortAnimation(sortAlgorithm([...array]));
+    setChildAlgorithmSelected(algorithmInformation['quick']);
   }
   
   function handleBubbleSortAnimation(sortAlgorithm) { 
     setChildButtonsDisabled(true);
     setBubbleAnimation(sortAlgorithm([...array]));
+    setChildAlgorithmSelected(algorithmInformation['bubble']);
   }
 
   useEffect(() => {
