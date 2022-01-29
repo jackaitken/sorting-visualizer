@@ -18,3 +18,36 @@
   justify-content: center;
   align-items: center;
 }
+
+.legend { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0%;
+}
+
+.legend li { 
+  float: left; 
+  margin-right: 10px; 
+  list-style: none;
+}
+
+.legend span { 
+  border: 1px solid white; 
+  float: left; 
+  width: 20px; 
+  height: 20px; 
+  margin: 5px; 
+}
+
+.legend .leftPointerGraphic { 
+  background-color: red; 
+}
+
+.legend .rightPointerGraphic { 
+  background-color: blue; 
+}
+
+.timeSpaceComplexity {
+  padding: 3px;
+}

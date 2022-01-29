@@ -25,6 +25,7 @@ function SortVisualizer() {
   function handleSetNewArray() {
     setArray(getRandomArray(arraySize));
     setButtonsDisabled(false);
+    setAlgorithmSelected(false);
   }
 
   useEffect(() => {
@@ -38,8 +39,6 @@ function SortVisualizer() {
       document.getElementById(`arrayBar${index}`).style.background = 'black';
     });
   }, [array]);
-
-  console.log(algorithmSelected);
 
   return (
     <>
