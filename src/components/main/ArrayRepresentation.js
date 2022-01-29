@@ -9,7 +9,7 @@ function ArrayRepresentation(props) {
       style={{height: `${num}px`}}
       key={idx}
       id={`arrayBar${idx}`}
-      data-tooltip={num}
+      data-tooltip={`Height: ${num}`}
       >
       </div>
     </>

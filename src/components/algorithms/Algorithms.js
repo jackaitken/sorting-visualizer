@@ -7,9 +7,9 @@ import BubbleSortButton from '../algorithms/BubbleSortButton';
 import ArrayContext from '../ArrayContext';
 
 function Algorithms() {
-  const { array, sortSpeed } = useContext(ArrayContext);
+  const { array, sortSpeed, buttons } = useContext(ArrayContext);
 
-  const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
+  const [ childButtonsDisabled, setChildButtonsDisabled ] = buttons;
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
@@ -17,30 +17,30 @@ function Algorithms() {
   const [ animationFinished, setAnimationFinished ] = useState(false);
 
   function handleMergeSortAnimation(sortAlgorithm) {
-    setButtonsDisabled(true);
+    setChildButtonsDisabled(true);
     setMergeSortAnimation(sortAlgorithm([...array]));
   }
 
   function handleInsertionSortAnimation(sortAlgorithm) {
-    setButtonsDisabled(true);
+    setChildButtonsDisabled(true);
     setInsertionSortAnimation(sortAlgorithm([...array]));
   }
   
   function handleQuicksortAnimation(sortAlgorithm) {
-    setButtonsDisabled(true);
+    setChildButtonsDisabled(true);
     setQuicksortAnimation(sortAlgorithm([...array]));
   }
   
   function handleBubbleSortAnimation(sortAlgorithm) { 
-    setButtonsDisabled(true);
+    setChildButtonsDisabled(true);
     setBubbleAnimation(sortAlgorithm([...array]));
   }
 
   useEffect(() => {
-    const END_OF_HEIGHT = 'p';
+    const END_OF_NUM = 'p';
     for (let i = 0; i < array.length; i++) {
       let barHeight = document.getElementById(`arrayBar${i}`).style.height;
-      barHeight = barHeight.slice(0, barHeight.indexOf(END_OF_HEIGHT)); 
+      barHeight = barHeight.slice(0, barHeight.indexOf(END_OF_NUM)); 
       document.getElementById(`arrayBar${i}`).setAttribute('data-tooltip', barHeight);
     }
   }, [animationFinished])
@@ -168,7 +168,7 @@ function Algorithms() {
 
         setTimeout(() => {  
           firstBarStyle.background = 'red';
-          secondBarStyle.background = 'red';
+          secondBarStyle.background = 'blue';
         }, i * sortSpeed);
 
         setTimeout(() => {
@@ -200,10 +200,10 @@ function Algorithms() {
  
   return (
     <ul>
-      <li><MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={buttonsDisabled} /></li>
-      <li><InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={buttonsDisabled} /></li>
-      <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={buttonsDisabled} /></li>
-      <li><BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={buttonsDisabled} /></li>
+      <li><MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={childButtonsDisabled} /></li>
+      <li><InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={childButtonsDisabled} /></li>
+      <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={childButtonsDisabled} /></li>
+      <li><BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={childButtonsDisabled} /></li>
     </ul>
   );
 }

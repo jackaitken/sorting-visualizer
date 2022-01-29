@@ -17,13 +17,13 @@ function SortVisualizer() {
   let settings = {
     array: array,
     sortSpeed: sortSpeed,
+    buttons: [ buttonsDisabled, setButtonsDisabled ],
   }
   
   function handleSetNewArray() {
     setArray(getRandomArray(arraySize));
     setButtonsDisabled(false);
   }
-
 
   useEffect(() => {
     setButtonsDisabled(false);
