@@ -59,9 +59,7 @@ function SortVisualizer() {
         <ArrayRepresentation array={array} />
       </div>
       <div className={styles.algorithmInfo}>
-        {algorithmSelected  ? 
-        algorithmSelected : ''
-        }
+        {algorithmSelected  || ''}
       </div>
     </>
   );

@@ -13,8 +13,8 @@ function ChangeArraySizeSlider({ handleChange, disabled }) {
     <input
     name='sizeSlider' 
     type='range' 
-    min='10'
-    max='150'
+    min='5'
+    max='90'
     disabled={disabled}
     onChange={handleSpeedChange}></input>
     </div>
