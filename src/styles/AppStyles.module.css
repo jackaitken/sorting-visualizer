@@ -48,6 +48,10 @@
   background-color: blue; 
 }
 
+.legend .pivotGraphic {
+  background-color: green;
+}
+
 .timeSpaceComplexity {
   padding: 3px;
 }

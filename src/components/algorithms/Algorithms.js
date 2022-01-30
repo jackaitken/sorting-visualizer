@@ -72,6 +72,11 @@ function Algorithms() {
             let barStyle = document.getElementById(`arrayBar${range[i]}`).style;
             barStyle.background = 'red';
           }
+
+          for (let i = 0; i < range.length; i++) {
+            let barStyle = document.getElementById(`arrayBar${range[i]}`).style;
+            barStyle.background = 'orange';
+          }
         }, i * sortSpeed);
 
         setTimeout(() => {
@@ -97,11 +102,11 @@ function Algorithms() {
 
         setTimeout(() => {
           if (insertionSortAnimation[i].curIndexShift) {
-            tempIndexStyle.background = 'blue';
-            curIndexStyle.background = 'red';
-          } else {
             tempIndexStyle.background = 'red';
             curIndexStyle.background = 'blue';
+          } else {
+            tempIndexStyle.background = 'blue';
+            curIndexStyle.background = 'red';
           }
         }, i * sortSpeed);
 
@@ -141,8 +146,8 @@ function Algorithms() {
 
         setTimeout(() => {
           leftBarStyle.background = 'red';
-          rightBarStyle.background = 'red';
-          pivotBarStyle.background = 'blue';
+          rightBarStyle.background = 'blue';
+          pivotBarStyle.background = 'green';
         }, i * sortSpeed);
 
         setTimeout(() => {
@@ -216,9 +221,9 @@ function Algorithms() {
  
   return (
     <ul>
+      <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={childButtonsDisabled} /></li>
       <li><MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={childButtonsDisabled} /></li>
       <li><InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={childButtonsDisabled} /></li>
-      <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={childButtonsDisabled} /></li>
       <li><BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={childButtonsDisabled} /></li>
     </ul>
   );
