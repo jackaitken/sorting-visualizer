@@ -5,7 +5,7 @@ function BubbleSortTimeSpace() {
   return (
     <div className={styles.algorithmInfo}>
       <p className={styles.timeSpaceComplexity}>Time Complexity: <em>O(N<sup>2</sup>)</em></p>
-      <p>||</p>
+      <p>&emsp;</p>
       <p className={styles.timeSpaceComplexity}>Space Complexity: <em>O(1)</em></p>
     </div>
   );
