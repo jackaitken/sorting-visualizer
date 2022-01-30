@@ -5,8 +5,8 @@ function MergeSortLegend() {
   return (
     <>
       <ul className={styles.legend}>
-        <li><span className={styles.leftPointerGraphic}></span>Left Pointer</li>
-        <li><span className={styles.rightPointerGraphic}></span>Right Pointer</li>
+        <li><span className={styles.sorted}></span>Sorted</li>
+        <li><span className={styles.subarray}></span>Current Subarray</li>
       </ul>
     </>
   );
