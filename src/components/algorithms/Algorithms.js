@@ -13,8 +13,8 @@ import MergeSortInfo from '../algorithms/merge_sort/MergeSortInfo';
 function Algorithms() {
   const { array, sortSpeed, buttons, algorithm } = useContext(ArrayContext);
 
+  const setChildAlgorithmSelected = algorithm;
   const [ childButtonsDisabled, setChildButtonsDisabled ] = buttons;
-  const [ childAlgorithmSelected, setChildAlgorithmSelected ] = algorithm;
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
@@ -53,6 +53,7 @@ function Algorithms() {
   }
 
   useEffect(() => {
+    // This helps set the element size tooltip
     const END_OF_NUM = 'p';
     for (let i = 0; i < array.length; i++) {
       let barHeight = document.getElementById(`arrayBar${i}`).style.height;
@@ -72,11 +73,6 @@ function Algorithms() {
             let barStyle = document.getElementById(`arrayBar${range[i]}`).style;
             barStyle.background = 'red';
           }
-
-          for (let i = 0; i < range.length; i++) {
-            let barStyle = document.getElementById(`arrayBar${range[i]}`).style;
-            barStyle.background = 'orange';
-          }
         }, i * sortSpeed);
 
         setTimeout(() => {
@@ -85,6 +81,13 @@ function Algorithms() {
             let newBarHeight = document.getElementById(`arrayBar${range[i]}`).style;
             newBarHeight.height = `${newArr[range[i]]}px`;
             setAnimationFinished(true);
+          }
+        }, (i + 1) * sortSpeed);
+
+        setTimeout(() => {
+          for (let i = 0; i < range.length; i++) {
+            let barStyle = document.getElementById(`arrayBar${range[i]}`).style;
+            barStyle.background = 'orange';
           }
         }, (i + 1) * sortSpeed);
       }
