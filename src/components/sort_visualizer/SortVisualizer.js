@@ -15,11 +15,11 @@ function SortVisualizer() {
   const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
   const [ algorithmSelected, setAlgorithmSelected ] = useState(false);
 
-  let settings = {
+  let context = {
     array: array,
     sortSpeed: sortSpeed,
     buttons: [ buttonsDisabled, setButtonsDisabled ],
-    algorithm: [ algorithmSelected, setAlgorithmSelected ],
+    algorithm: setAlgorithmSelected,
   }
   
   function handleSetNewArray() {
@@ -43,7 +43,7 @@ function SortVisualizer() {
   return (
     <>
       <nav>
-        <ArrayContext.Provider value={settings}>
+        <ArrayContext.Provider value={context}>
           <Navigation />
         </ArrayContext.Provider>
         <ul>
