@@ -3,7 +3,9 @@ import { getRandomArray } from '../../lib/algorithmVisualizationHelpers/getRando
 import ArrayRepresentation from '../main/ArrayRepresentation';
 import SetNewArrayButton from '../nav/SetNewArrayButton';
 import Navigation from '../nav/Navigation';
+import CaseStudy from '../case_study/CaseStudy';
 import SortSpeedSlider from '../main/SortSpeedSlider';
+import Footer from '../footer/Footer';
 import ChangeArraySizeSlider from '../main/ChangeArraySizeSlider';
 import ArrayContext from '../ArrayContext';
 import styles from '../../styles/AppStyles.module.css';
@@ -59,8 +61,11 @@ function SortVisualizer() {
         <ArrayRepresentation array={array} />
       </div>
       <div className={styles.algorithmInfo}>
-        {algorithmSelected  || ''}
+        {algorithmSelected  || <CaseStudy/>}
       </div>
+      <footer>
+        <Footer/>
+      </footer>
     </>
   );
 }
