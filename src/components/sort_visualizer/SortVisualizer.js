@@ -22,7 +22,7 @@ function SortVisualizer() {
     array: array,
     sortSpeed: sortSpeed,
     algoButtons: [ algorithmButtonsDisabled, setAlgorithmButtonsDisabled ],
-    arrayButtons: [ arrayButtonDisabled, setArrayButtonDisabled ],
+    arrayButton: setArrayButtonDisabled,
     algorithm: setAlgorithmSelected,
   }
   

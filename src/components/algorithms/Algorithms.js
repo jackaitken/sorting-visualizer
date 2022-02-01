@@ -15,13 +15,13 @@ function Algorithms() {
     array, 
     sortSpeed, 
     algoButtons,
-    arrayButtons, 
+    arrayButton, 
     algorithm
   } = useContext(ArrayContext);
 
   const setChildAlgorithmSelected = algorithm;
+  const setChildArrayButtonDisabled = arrayButton;
   const [ childAlgoButtonsDisabled, setChildAlgoButtonsDisabled ] = algoButtons;
-  const [ childArrayButtonDisabled, setChildArrayButtonDisabled ] = arrayButtons;
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
