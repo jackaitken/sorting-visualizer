@@ -30,6 +30,8 @@ function CaseStudy() {
         </p>
         For each algorithm, I provide some details about how it works, and some general information. 
         Set your array size, desired speed, and select an algorithm to get started.
+        <br/>
+        <br/>
     </div>
   );
 }
