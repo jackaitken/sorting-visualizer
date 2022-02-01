@@ -11,10 +11,17 @@ import BubbleSortInfo from '../algorithms/bubble_sort/BubbleSortInfo';
 import MergeSortInfo from '../algorithms/merge_sort/MergeSortInfo';
 
 function Algorithms() {
-  const { array, sortSpeed, buttons, algorithm } = useContext(ArrayContext);
+  const { 
+    array, 
+    sortSpeed, 
+    algoButtons,
+    arrayButtons, 
+    algorithm
+  } = useContext(ArrayContext);
 
   const setChildAlgorithmSelected = algorithm;
-  const [ childButtonsDisabled, setChildButtonsDisabled ] = buttons;
+  const [ childAlgoButtonsDisabled, setChildAlgoButtonsDisabled ] = algoButtons;
+  const [ childArrayButtonDisabled, setChildArrayButtonDisabled ] = arrayButtons;
   const [ quicksortAnimation, setQuicksortAnimation ] = useState();
   const [ bubbleAnimation, setBubbleAnimation ] = useState();
   const [ insertionSortAnimation, setInsertionSortAnimation ] = useState();
@@ -29,27 +36,31 @@ function Algorithms() {
   }
 
   function handleMergeSortAnimation(sortAlgorithm) {
-    setChildButtonsDisabled(true);
+    setChildAlgoButtonsDisabled(true);
     setMergeSortAnimation(sortAlgorithm([...array]));
     setChildAlgorithmSelected(algorithmInformation['merge']);
+    setChildArrayButtonDisabled(true);
   }
 
   function handleInsertionSortAnimation(sortAlgorithm) {
-    setChildButtonsDisabled(true);
+    setChildAlgoButtonsDisabled(true);
     setInsertionSortAnimation(sortAlgorithm([...array]));
     setChildAlgorithmSelected(algorithmInformation['insertion']);
+    setChildArrayButtonDisabled(true);
   }
   
   function handleQuicksortAnimation(sortAlgorithm) {
-    setChildButtonsDisabled(true);
+    setChildAlgoButtonsDisabled(true);
     setQuicksortAnimation(sortAlgorithm([...array]));
     setChildAlgorithmSelected(algorithmInformation['quick']);
+    setChildArrayButtonDisabled(true);
   }
   
   function handleBubbleSortAnimation(sortAlgorithm) { 
-    setChildButtonsDisabled(true);
+    setChildAlgoButtonsDisabled(true);
     setBubbleAnimation(sortAlgorithm([...array]));
     setChildAlgorithmSelected(algorithmInformation['bubble']);
+    setChildArrayButtonDisabled(true);
   }
 
   useEffect(() => {
@@ -90,6 +101,10 @@ function Algorithms() {
             barStyle.background = 'orange';
           }
         }, (i + 1) * sortSpeed);
+
+        setTimeout(() => {
+          setChildArrayButtonDisabled(false);
+        }, (mergeSortAnimation.length + 1) * sortSpeed);
       }
     }
   }, [mergeSortAnimation]);
@@ -131,6 +146,7 @@ function Algorithms() {
               bar.style.background = 'orange';
             }
           });
+          setChildArrayButtonDisabled(false);
         }, (insertionSortAnimation.length + 1) * sortSpeed);
       }
     }
@@ -178,6 +194,7 @@ function Algorithms() {
               bar.style.background = 'orange';
             }
           });
+          setChildArrayButtonDisabled(false);
         }, (quicksortAnimation.length + 1) * sortSpeed);
       }
     }
@@ -216,6 +233,7 @@ function Algorithms() {
               bar.style.background = 'orange';
             }
           });
+          setChildArrayButtonDisabled(false);
         }, (bubbleAnimation.length + 1) * sortSpeed);
       }
     }
@@ -224,10 +242,10 @@ function Algorithms() {
  
   return (
     <ul>
-      <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={childButtonsDisabled} /></li>
-      <li><MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={childButtonsDisabled} /></li>
-      <li><InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={childButtonsDisabled} /></li>
-      <li><BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={childButtonsDisabled} /></li>
+      <li><QuicksortButton handleClick={() => handleQuicksortAnimation(SortingAlgorithms.quicksortWrapper)} disabled={childAlgoButtonsDisabled} /></li>
+      <li><MergeSortButton handleClick={() => handleMergeSortAnimation(SortingAlgorithms.mergeSortWrapper)} disabled={childAlgoButtonsDisabled} /></li>
+      <li><InsertionSortButton handleClick={() => handleInsertionSortAnimation(SortingAlgorithms.insertionSortWrapper)} disabled={childAlgoButtonsDisabled} /></li>
+      <li><BubbleSortButton handleClick={() => handleBubbleSortAnimation(SortingAlgorithms.bubbleSort)} disabled={childAlgoButtonsDisabled} /></li>
     </ul>
   );
 }

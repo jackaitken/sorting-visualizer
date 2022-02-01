@@ -14,24 +14,26 @@ function SortVisualizer() {
   const [ arraySize, setArraySize ] = useState(50);
   const [ array, setArray ] = useState(getRandomArray(arraySize));
   const [ sortSpeed, setSortSpeed ] = useState('50');
-  const [ buttonsDisabled, setButtonsDisabled ] = useState(false);
+  const [ algorithmButtonsDisabled, setAlgorithmButtonsDisabled ] = useState(false);
+  const [ arrayButtonDisabled, setArrayButtonDisabled ] = useState(false);
   const [ algorithmSelected, setAlgorithmSelected ] = useState(false);
 
   let context = {
     array: array,
     sortSpeed: sortSpeed,
-    buttons: [ buttonsDisabled, setButtonsDisabled ],
+    algoButtons: [ algorithmButtonsDisabled, setAlgorithmButtonsDisabled ],
+    arrayButtons: [ arrayButtonDisabled, setArrayButtonDisabled ],
     algorithm: setAlgorithmSelected,
   }
   
   function handleSetNewArray() {
     setArray(getRandomArray(arraySize));
-    setButtonsDisabled(false);
+    setAlgorithmButtonsDisabled(false);
     setAlgorithmSelected(false);
   }
 
   useEffect(() => {
-    setButtonsDisabled(false);
+    setAlgorithmButtonsDisabled(false);
     setArray(getRandomArray(arraySize));
   }, [arraySize]);
 
@@ -49,13 +51,13 @@ function SortVisualizer() {
           <Navigation />
         </ArrayContext.Provider>
         <ul>
-          <li><SetNewArrayButton handleClick={handleSetNewArray}/></li>
+          <li><SetNewArrayButton handleClick={handleSetNewArray} disabled={arrayButtonDisabled}/></li>
         </ul>
       </nav>
       <hr/>
       <div className={styles.buttonWrapper}>
-        <SortSpeedSlider handleChange={setSortSpeed} disabled={buttonsDisabled}/>
-        <ChangeArraySizeSlider handleChange={setArraySize} disabled={buttonsDisabled}/>
+        <SortSpeedSlider handleChange={setSortSpeed} disabled={algorithmButtonsDisabled}/>
+        <ChangeArraySizeSlider handleChange={setArraySize} disabled={algorithmButtonsDisabled}/>
       </div>      
       <div>
         <ArrayRepresentation array={array} />
