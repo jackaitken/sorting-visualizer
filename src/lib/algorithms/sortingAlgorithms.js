@@ -1,4 +1,4 @@
-class SortingAlgorithms {
+export class SortingAlgorithms {
   static algorithms = {
     bubble: SortingAlgorithms.bubbleSort,
     quick: SortingAlgorithms.quicksort,
@@ -225,5 +225,3 @@ class SortingAlgorithms {
     return animationArr;
   }
 }
-
-module.exports = { SortingAlgorithms };
