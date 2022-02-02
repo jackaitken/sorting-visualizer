@@ -1,7 +1,6 @@
 {
   "name": "sort-visualizer",
   "version": "0.1.0",
-  "homepage": "https://jackaitken.github.io/sorting-visualizer/",
   "private": true,
   "dependencies": {
     "@picocss/pico": "^1.4.4",
