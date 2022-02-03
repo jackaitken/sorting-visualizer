@@ -8,4 +8,4 @@ I had a blast creating this with React and I learned a lot about the library, an
 
 Please feel free to fork this repository to run it locally, and if you notice and bugs or have suggestions for improvements, always feel free to create an issue. Hope you enjoy it! 
 
-![image of sorting visualizer running] (/src/static/images/sorting_visualizer.png)
+![image of sorting visualizer running] (./src/static/images/sorting_visualizer.png)
