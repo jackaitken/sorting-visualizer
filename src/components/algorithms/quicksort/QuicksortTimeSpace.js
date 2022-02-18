@@ -6,7 +6,7 @@ function QuicksortTimeSpace() {
     <div className={styles.algorithmInfo}>
       <p className={styles.timeSpaceComplexity}>Time Complexity: <em>O(N log N)</em></p>
       <p>&emsp;</p>
-      <p className={styles.timeSpaceComplexity}>Space Complexity: <em>O(1)</em></p>
+      <p className={styles.timeSpaceComplexity}>Space Complexity: <em>O(log N)</em></p>
     </div>
   );
 }
