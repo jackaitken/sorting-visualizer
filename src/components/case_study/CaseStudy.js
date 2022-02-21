@@ -22,7 +22,7 @@ function CaseStudy() {
         19 million steps. Certainly a large number, but about 52,000 times faster.
         </p>
         <p>
-        So it's clear that sorting, and sorting efficiently, is of a huge importance to 
+        So it's clear that sorting, and sorting efficiently, is of huge importance to 
         creating software that is fast and scalable. In this app I showcase 4 different
         algorithms, two of which have a time complexity of O(N log N), Merge Sort and Quicksort
         , and two of which have a time complexity of O(N<sup>2</sup>), Bubble Sort and 
