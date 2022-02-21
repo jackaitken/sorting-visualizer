@@ -12,7 +12,7 @@ function CaseStudy() {
         you enjoy the app and if you find any bugs or have suggestions for 
         improvements please check out the <a href='https://github.com/jackaitken/sorting-visualizer' target='_blank'>Github repository</a>.
       </p>
-        <h3 className={styles.caseStudyHeaders}>The Important of Sorting Algorithms</h3>
+        <h3 className={styles.caseStudyHeaders}>The Importance of Sorting Algorithms</h3>
         <p>
         Given an array of 100 items, an efficient sorting algorithm would take
         roughly 600 steps. A less efficient algorithm would need 10,000 steps. 
